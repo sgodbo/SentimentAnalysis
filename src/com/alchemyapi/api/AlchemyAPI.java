@@ -845,15 +845,17 @@ public class AlchemyAPI {
         throws IOException, SAXException,
                ParserConfigurationException, XPathExpressionException
     {
-        URL url = new URL(_requestUri + callPrefix + "/" + callName);
-
-        HttpURLConnection handle = (HttpURLConnection) url.openConnection();
-        handle.setDoOutput(true);
+        
 
         StringBuilder data = new StringBuilder();
 
         data.append("apikey=").append(this._apiKey);
         data.append(params.getParameterString());
+        
+        URL url = new URL(_requestUri + callPrefix + "/" + callName + "?" + data);
+
+        HttpURLConnection handle = (HttpURLConnection) url.openConnection();
+        handle.setDoOutput(true);
 
         handle.addRequestProperty("Content-Length", Integer.toString(data.length()));
 

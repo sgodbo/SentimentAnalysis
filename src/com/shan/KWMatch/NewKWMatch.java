@@ -32,7 +32,7 @@ public class NewKWMatch {
 	
 	public static void main (String args[]) throws MalformedURLException, IOException, NullPointerException, PathNotFoundException{
 		
-		String url = "https://graph.facebook.com/v2.2/marksandspencer?fields=posts{message,comments.limit(5){message}}&access_token=CAACEdEose0cBAJilwPZCKfGOQ9g45SJrHHP8gSToFTkfvzlH6ItD4sRo5OWqlePP6nTIbIMQHqONqt8RMoG9PXwrZBWGe4zugHE2jDVpcQgwqpugCLF8FG55YRyEYefAiAelkQkqM04fCZArXiEa962cfQuJ7ZAHdbFZCmLu058i6gC7oZCUbaSmZCPly7ZAzdvusXJsc2Npib7q3iNNVF2IyzYn1kDRgRwZD";
+		String url = "https://graph.facebook.com/v2.2/marksandspencer?fields=posts{message,comments.limit(5){message}}&access_token=CAACEdEose0cBAH5JlEwXOfFpWwzZA3XTSZAJZCpzO3JH437sKgZCmJZCnWcRzJq85mFzC3HZCWGiEyP6sZCwSimkITso8cYXspTJQtyrOWP2JSJ9QtmF4HHcbu6RZBqYYN5VOvl8h7Ymc0934Q8bHnb7ZAajtZBcpZA66SxJQKyzi2FRm78ZCSiT4GISqU1DXDnnpaaiNaUCo9qyIBO6pLbGiDo9BMfSrZCttkZBIZD";
 		URLConnection connection = new URL(url).openConnection();
 		connection.setRequestProperty("Accept-Charset", "UTF-32");
 		connection.connect();
@@ -41,7 +41,7 @@ public class NewKWMatch {
 		
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
         DB db = mongoClient.getDB("test");
-        DBCollection collection = db.createCollection("mycollection", new BasicDBObject("capped", true)
+        DBCollection collection = db.createCollection("mycollection", new BasicDBObject("capped", false)
         .append("size", 1048576));
 		
 		
@@ -52,11 +52,12 @@ public class NewKWMatch {
 		while ( (currentLine = br.readLine()) != null){
 			resp += currentLine + "\n";
 		}
-		int itr = 0;
-		String jsonPathForMongoDB = "$.posts.data["+itr+"]";
+		
+		
 		String jsonObjectForMongoDB = "";
 		
-		for(itr = 0;itr < 10;itr++){
+		for(int itr = 0;itr < 10;itr++){
+			String jsonPathForMongoDB = "$.posts.data["+itr+"]";
 		    jsonObjectForMongoDB = JsonPath.read(resp, jsonPathForMongoDB).toString();
 		    if(null != jsonObjectForMongoDB){
 		        DBObject dbo = (DBObject) JSON.parse(jsonObjectForMongoDB);
@@ -65,7 +66,7 @@ public class NewKWMatch {
 		}
 		//BasicDBObject bdo = (BasicDBObject) JSON.parse(resp);
 		//DBCollection coll = db.createCollection("mycol", bdo);
-		List<JsonPathResultObject> jproArr = new ArrayList<JsonPathResultObject>();
+		/*List<JsonPathResultObject> jproArr = new ArrayList<JsonPathResultObject>();
 		
 		String jsonPostMsgs;
 		String jsonCommentMsgs;
@@ -103,7 +104,7 @@ public class NewKWMatch {
 			jproArr.add(jpro);
 		}
 		
-		Iterator<JsonPathResultObject> iterator = jproArr.iterator();
+		/*Iterator<JsonPathResultObject> iterator = jproArr.iterator();
 		while(iterator.hasNext()){
 			JsonPathResultObject jp = iterator.next();
 			if(null != jp.getPostText())
@@ -114,9 +115,14 @@ public class NewKWMatch {
 			for (String string : jp.getCommentText()) {
 				System.out.println(string);
 			}}
-		}
+		}*/
 		
 	}
+	
+	public void pushJsonDataIntoMongoDB(){}
+	public void fetchDataFromMongoDB(){}
+	public void fetchSentimentForComments(){}
+	
 	
 	
 
