@@ -32,7 +32,7 @@ public class NewKWMatch {
 	
 	public static void main (String args[]) throws MalformedURLException, IOException, NullPointerException, PathNotFoundException{
 		
-		String url = "https://graph.facebook.com/v2.2/marksandspencer?fields=posts{message,comments.limit(5){message}}&access_token=CAACEdEose0cBAH5JlEwXOfFpWwzZA3XTSZAJZCpzO3JH437sKgZCmJZCnWcRzJq85mFzC3HZCWGiEyP6sZCwSimkITso8cYXspTJQtyrOWP2JSJ9QtmF4HHcbu6RZBqYYN5VOvl8h7Ymc0934Q8bHnb7ZAajtZBcpZA66SxJQKyzi2FRm78ZCSiT4GISqU1DXDnnpaaiNaUCo9qyIBO6pLbGiDo9BMfSrZCttkZBIZD";
+		String url = "https://graph.facebook.com/v2.2/marksandspencer?fields=posts{message,comments.limit(5){message}}&access_token=CAACEdEose0cBAFH001ZCCrNijSOIZA3FFHeBO0ZA7yStkn2g1cJNj8Sl8ktHXCQiZArYJOX3czDtgD45s8vBipaUGhdyil6uV1JspZALZBCUnZAZCZBOvWz8S5LcOQjSF2AZCqNGGjzL1dAaN5aAmN56lDBZBPV4cZCILAjZBEENJWUqFOXVFYZApl6E8amJGAtHloZAMiaTEMIpw6oO9wWCkxvKcb8bPzakl21FnoZD";
 		URLConnection connection = new URL(url).openConnection();
 		connection.setRequestProperty("Accept-Charset", "UTF-32");
 		connection.connect();
@@ -64,6 +64,8 @@ public class NewKWMatch {
 		        collection.insert(dbo);
 		    }
 		}
+		
+		mongoClient.close();
 		//BasicDBObject bdo = (BasicDBObject) JSON.parse(resp);
 		//DBCollection coll = db.createCollection("mycol", bdo);
 		/*List<JsonPathResultObject> jproArr = new ArrayList<JsonPathResultObject>();

@@ -32,8 +32,9 @@ public class MongoTest {
         String score;
         String messageToBeEvaluated;
         BasicDBObject commentsMessage;
+        BasicDBObject searchQuery;
         while (cursor.hasNext()){
-        	DBObject o = cursor.next();
+        	BasicDBObject o = (BasicDBObject)cursor.next();
         	if(null != (comments = (BasicDBObject)o.get("comments"))){
         		if(null != (commentsList = (BasicDBList)comments.get("data"))){
         			Iterator itr = commentsList.iterator();
@@ -41,14 +42,17 @@ public class MongoTest {
         				commentsMessage = (BasicDBObject)commentsList.get(i);
         				if(null != commentsMessage){
         					messageToBeEvaluated = commentsMessage.get("message").toString();
+        					if(!messageToBeEvaluated.isEmpty()){
+        						score = sa.queryAlchemyAPIForTextSentiment(messageToBeEvaluated);
         					System.out.println(messageToBeEvaluated);
-        					score = sa.queryAlchemyAPIForTextSentiment(messageToBeEvaluated);
+        					
         					if(!score.equals("ignore")){
-        						commentsMessage.append("score", score);
-        						//o.put("$set", commentsMessage);
-        					    collection.update((BasicDBObject) o, commentsMessage);
-        					    //collection.save(jo)
+        						commentsMessage.append("score",score);
+        						searchQuery = new BasicDBObject().append("message", messageToBeEvaluated);
+        					    collection.update(searchQuery, commentsMessage);
+        					    collection.save(o);
         						System.out.println(score);
+        					}
         					}
         				}
 					}
@@ -57,7 +61,7 @@ public class MongoTest {
         	System.out.println();
         	System.out.println();
         }
-        
+        mongoClient.close();
         //sa.queryAlchemyAPIForTextSentiment("Of course Michael would never ignore his mum! Our winner has now been selected but there's another chance to win coming your way in Episode 4 tomorrow at 10am!");
         /*BasicDBObject newDocument = new BasicDBObject();
     	newDocument.append("$set", new BasicDBObject().append("score", 32));
