@@ -36,26 +36,16 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import net.sf.json.JSON;
-import net.sf.json.JSONSerializer;
-import net.sf.json.xml.XMLSerializer;
-
-import org.apache.commons.io.input.BOMInputStream;
-import org.apache.commons.json.JSONArray;
-import org.apache.commons.json.JSONException;
-import org.apache.commons.json.JSONObject;
-import org.apache.commons.json.utils.XML;
+import org.apache.sling.commons.json.JSONArray;
+import org.apache.sling.commons.json.JSONException;
+import org.apache.sling.commons.json.JSONObject;
 
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
-import com.alchemyapi.api.AlchemyAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -76,7 +66,7 @@ public class kwmatch {
 	 */
 	@SuppressWarnings("null")
 	public static void main(String[] args) throws MalformedURLException,
-			IOException, JSONException, org.json.JSONException,
+			IOException, JSONException,
 			ParserConfigurationException, SAXException,
 			XPathExpressionException, TransformerException {
 		String url = "https://graph.facebook.com/MarksAndSpencer/posts?since=1392681600&fields=message,comments.fields%28message%29&access_token=CAACEdEose0cBAEPBFtqxJGwKClm9Vdw6SoDCH37ZCzuQRZBxuxaSgLDZCLvU3cvKs6CvRUiDfCherrEBvOVrPvOrRbybPrO36tKQ358yOiyUyQudxHZCrhZCuNYZBxN4Dz6E2lVXhkjU9HMa1efZC3tsESYrReFms2JGnSUYXuDjoMKLtpMA0yYEB0ivQFcDRI3258ZBiZBqFuFxigWzaRGPJuvDDlUCxI70ZD";
