@@ -1,6 +1,7 @@
 package com.shan.KWMatch;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Properties;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
@@ -32,7 +34,10 @@ public class SentAnalysis {
      */
     public String queryAlchemyAPIForTextSentiment(String textToBeQueried) throws MalformedURLException, IOException, XPathExpressionException, SAXException, ParserConfigurationException {
         // TODO Auto-generated method stub
-    	AlchemyAPI alApi = AlchemyAPI.GetInstanceFromString("781f195a75cdb9de81b0f8f0f8346ea293a22ae1");
+    	InputStream file = new FileInputStream("\resources\tokens_keys.properties");
+		Properties prop = new Properties();
+		prop.load(file);
+    	AlchemyAPI alApi = AlchemyAPI.GetInstanceFromString(prop.getProperty("alchemy_key"));
     	Document doc = alApi.TextGetTextSentiment(textToBeQueried);
  
     	NodeList nodeList = doc.getElementsByTagName("*");
